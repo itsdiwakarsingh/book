@@ -10,8 +10,8 @@ require("dotenv").config({ path: path.join(__dirname, ".env") });
 const defaultFrontendOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
-  "https://books-umber-nu.vercel.app/",
-  "https://book-three-sage.vercel.app/",
+  "https://books-umber-nu.vercel.app",
+  "https://book-three-sage.vercel.app",
   "https://book-app-frontend-tau.vercel.app",
 ];
 const extraOrigins = (process.env.FRONTEND_ORIGINS || "")
