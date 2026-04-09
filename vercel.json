@@ -7,12 +7,7 @@
     },
     {
       "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "configuration": {
-        "installCommand": "npm --prefix ./frontend install",
-        "buildCommand": "npm run build --prefix ./frontend",
-        "outputDirectory": "./frontend/dist"
-      }
+      "use": "@vercel/static-build"
     }
   ],
   "rewrites": [
