@@ -10,14 +10,17 @@ require("dotenv").config({ path: path.join(__dirname, ".env") });
 const defaultFrontendOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
-  "https://book-three-sage.vercel.app",
+  "https://books-umber-nu.vercel.app/",
+  "https://book-three-sage.vercel.app/",
   "https://book-app-frontend-tau.vercel.app",
 ];
 const extraOrigins = (process.env.FRONTEND_ORIGINS || "")
   .split(",")
   .map((s) => s.trim().replace(/\/$/, ""))
   .filter(Boolean);
-const allowedOrigins = [...new Set([...defaultFrontendOrigins, ...extraOrigins])];
+const allowedOrigins = [
+  ...new Set([...defaultFrontendOrigins, ...extraOrigins]),
+];
 
 // middleware
 app.use(express.json());
@@ -30,19 +33,19 @@ app.use(
       callback(null, false);
     },
     credentials: true,
-  })
+  }),
 );
 
 // routes
-const bookRoutes = require('./src/books/book.route');
-const orderRoutes = require("./src/orders/order.route")
-const userRoutes =  require("./src/users/user.route")
-const adminRoutes = require("./src/stats/admin.stats")
+const bookRoutes = require("./src/books/book.route");
+const orderRoutes = require("./src/orders/order.route");
+const userRoutes = require("./src/users/user.route");
+const adminRoutes = require("./src/stats/admin.stats");
 
-app.use("/api/books", bookRoutes)
-app.use("/api/orders", orderRoutes)
-app.use("/api/auth", userRoutes)
-app.use("/api/admin", adminRoutes)
+app.use("/api/books", bookRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/auth", userRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.get("/", (req, res) => {
   res.send("Book Store Server is running!");
@@ -55,16 +58,20 @@ function printMongoHelp(err) {
   if (msg.includes("bad auth") || err?.code === 8000) {
     console.error(
       "\nAtlas said: wrong username or password in DB_URL.\n" +
-      "Fix it in MongoDB Atlas:\n" +
-      "  1) Database Access → your user → Edit → Reset password (or create a new user).\n" +
-      "  2) Database → Connect → Drivers → copy the new connection string.\n" +
-      "  3) Put it in backend/.env as DB_URL=...\n" +
-      "If your password has @ # : etc., URL-encode it in the connection string.\n"
+        "Fix it in MongoDB Atlas:\n" +
+        "  1) Database Access → your user → Edit → Reset password (or create a new user).\n" +
+        "  2) Database → Connect → Drivers → copy the new connection string.\n" +
+        "  3) Put it in backend/.env as DB_URL=...\n" +
+        "If your password has @ # : etc., URL-encode it in the connection string.\n",
     );
   } else if (!process.env.DB_URL?.trim()) {
-    console.error("\nDB_URL is missing. Set DB_URL in backend/.env to your Atlas connection string.\n");
+    console.error(
+      "\nDB_URL is missing. Set DB_URL in backend/.env to your Atlas connection string.\n",
+    );
   } else {
-    console.error("\nAlso check: Atlas → Network Access → allow your IP (or 0.0.0.0/0 for dev).\n");
+    console.error(
+      "\nAlso check: Atlas → Network Access → allow your IP (or 0.0.0.0/0 for dev).\n",
+    );
   }
 }
 
