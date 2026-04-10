@@ -1,13 +1,10 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-
 const mongoose = require("mongoose");
-const port = process.env.PORT || 5000;
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 
-<<<<<<< HEAD
 const defaultFrontendOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
@@ -36,14 +33,22 @@ app.use(
     credentials: true,
   }),
 );
-=======
+
 // middleware
 app.use(express.json());
-app.use(cors({
-    origin: ['http://localhost:5173', 'https://book-app-frontend-tau.vercel.app'],
-    credentials: true
-}))
->>>>>>> parent of 3d49e80 (fixing vercel link)
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://book-app-frontend-tau.vercel.app",
+    ],
+    credentials: true,
+  }),
+);
+
+// middleware
+app.use(express.json());
+app.use(cors()); // ✅ allows ALL origins
 
 // routes
 const bookRoutes = require("./src/books/book.route");
@@ -99,8 +104,9 @@ async function start() {
     process.exit(1);
   }
 
-  app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+  const port = process.env.PORT || 5000;
+  app.listen(port, "0.0.0.0", () => {
+    console.log(`Server listening on port ${port}`);
   });
 }
 
