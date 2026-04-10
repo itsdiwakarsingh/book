@@ -7,34 +7,9 @@ const port = process.env.PORT || 5000;
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 
-const defaultFrontendOrigins = [
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-  "https://books-umber-nu.vercel.app",
-  "https://book-three-sage.vercel.app",
-  "https://book-app-frontend-tau.vercel.app",
-];
-const extraOrigins = (process.env.FRONTEND_ORIGINS || "")
-  .split(",")
-  .map((s) => s.trim().replace(/\/$/, ""))
-  .filter(Boolean);
-const allowedOrigins = [
-  ...new Set([...defaultFrontendOrigins, ...extraOrigins]),
-];
-
 // middleware
 app.use(express.json());
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin) return callback(null, true);
-      const normalized = origin.replace(/\/$/, "");
-      if (allowedOrigins.includes(normalized)) return callback(null, true);
-      callback(null, false);
-    },
-    credentials: true,
-  }),
-);
+app.use(cors()); // ✅ allows ALL origins
 
 // routes
 const bookRoutes = require("./src/books/book.route");
