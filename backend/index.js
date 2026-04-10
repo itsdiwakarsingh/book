@@ -5,6 +5,10 @@ const mongoose = require("mongoose");
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 const defaultFrontendOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
@@ -36,6 +40,7 @@ app.use(
 
 // middleware
 app.use(express.json());
+<<<<<<< Updated upstream
 app.use(
   cors({
     origin: [
@@ -49,6 +54,10 @@ app.use(
 // middleware
 app.use(express.json());
 app.use(cors()); // ✅ allows ALL origins
+=======
+app.use(cors()); // ✅ allows ALL origins
+>>>>>>> b8740c3deeefbf94397a4f85de307a0a5b202cb8
+>>>>>>> Stashed changes
 
 // routes
 const bookRoutes = require("./src/books/book.route");
